@@ -4,6 +4,16 @@
     path: "{{ rabbitmq_repo_file }}"
   register: rabbitmq_repofile_result
 
+- name: Erlang RPM download
+  copy:
+     src: "{{ rabbitmq_erlang_rpmurl }}"
+     dest: /tmp/erlang.rpm
+
+- name: Install Erlang
+  yum:
+     name: /tmp/erlang.rpm
+     state: present
+
 - name: Download and run RabbitMQ Package Repository Setup script
   shell: |
     curl -LsS "{{ rabbitmq_repo_script_setup_url }}" | bash -s --

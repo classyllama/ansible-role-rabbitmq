@@ -4,15 +4,10 @@
     path: "{{ rabbitmq_repo_file }}"
   register: rabbitmq_repofile_result
 
-- name: Erlang RPM download
-  copy:
-     src: "{{ rabbitmq_erlang_rpmurl }}"
-     dest: /tmp/erlang.rpm
-
-- name: Install Erlang
-  yum:
-     name: /tmp/erlang.rpm
-     state: present
+- name: Erlang installation
+  ansible.builtin.yum:
+    name: "{{ rabbitmq_erlang_rpmurl }}"
+    state: present
 
 - name: Download and run RabbitMQ Package Repository Setup script
   shell: |
